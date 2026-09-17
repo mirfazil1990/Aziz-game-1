@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dünya Ölkələri</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #eaf3ff, #f7fbff);
+    color: #222;
+}
+
+button {
+    font-family: inherit;
+}
+
+.header {
+    background: #173b67;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* ƏSAS MENYU */
+
+.menu {
+    text-align: center;
+    padding-top: 70px;
+}
+
+.menu h2 {
+    font-size: 30px;
+}
+
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.menu-button {
+    width: 260px;
+    padding: 28px;
+    border: none;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.2s;
+}
+
+.menu-button:hover {
+    transform: translateY(-5px);
+}
+
+.menu-button span {
+    display: block;
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+/* OYUN */
+
+.hidden {
+    display: none !important;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.info-box {
+    background: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.page-info {
+    text-align: center;
+    font-size: 19px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.flag-card {
+    background: white;
+    border: 3px solid #d0d7df;
+    border-radius: 15px;
+    min-height: 145px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.25s;
+}
+
+.flag-card img {
+    width: 125px;
+    height: 75px;
+    object-fit: contain;
+}
+
+.flag-card.correct {
+    border-color: #1a9b38;
+    background: #ddffe4;
+}
+
+.flag-card.wrong {
+    border-color: #e53935;
+    background: #ffe1e1;
+}
+
+.flag-card .country-result {
+    margin-top: 7px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* ÖLKƏ ADLARI */
+
+.country-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.country {
+    background: white;
+    border: 2px solid #aeb8c2;
+    border-radius: 10px;
+    padding: 12px 17px;
+    font-size: 17px;
+    cursor: grab;
+    user-select: none;
+    transition: 0.15s;
+}
+
+.country:hover {
+    transform: scale(1.03);
+}
+
+.country.used {
+    opacity: 0.25;
+    cursor: default;
+    transform: none;
+}
+
+/* MESAJ */
+
+.message {
+    text-align: center;
+    min-height: 35px;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+/* ÖLKƏ MƏLUMATI */
+
+.country-info {
+    background: white;
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    text-align: center;
+}
+
+.country-info img {
+    width: 180px;
+    max-height: 110px;
+    object-fit: contain;
+}
+
+.country-info h2 {
+    margin: 12px 0;
+    font-size: 30px;
+}
+
+.country-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.detail {
+    background: #f3f7fb;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.learn-button {
+    margin-top: 20px;
+    background: #173b67;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* DAHA ÇOX ÖYRƏN */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal-box {
+    background: white;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    border: none;
+    background: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.modal-box h2 {
+    text-align: center;
+}
+
+.fact {
+    background: #f4f7fa;
+    padding: 14px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+/* SƏHİFƏLƏR */
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.nav-button {
+    background: #173b67;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.nav-button:disabled {
+    background: #aaa;
+    cursor: default;
+}
+
+/* MENYUYA QAYIT */
+
+.home-button {
+    display: block;
+    margin: 20px auto;
+    background: #555;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* NƏTİCƏ */
+
+.result-box {
+    background: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 35px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.result-box h2 {
+    font-size: 32px;
+}
+
+.restart-button {
+    background: #173b67;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+.loading {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 24px;
+}
+
+/* TELEFON */
+
+@media (max-width: 800px) {
+
+    .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    .country-details {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>🌍 DÜNYA ÖLKƏLƏRİ</h1>
+
+    <p>Öyrən • Oyna • Dünyanı kəşf et</p>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ========================= -->
+<!-- ƏSAS MENYU -->
+<!-- ========================= -->
+
+<div id="menu" class="menu">
+
+    <h2>🌎 Hansı rejimdə oynamaq istəyirsən?</h2>
+
+    <div class="menu-buttons">
+
+        <button class="menu-button" onclick="startLearning()">
+
+            <span>📚</span>
+
+            Öyrənmə rejimi
+
+            <small>
+                Ölkələri sakitcə öyrən
+            </small>
+
+        </button>
+
+
+        <button class="menu-button" onclick="startGame()">
+
+            <span>🎮</span>
+
+            Oyun rejimi
+
+            <small>
+                Xal qazan və rekordunu qır
+            </small>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- YÜKLƏNİR -->
+<!-- ========================= -->
+
+<div id="loading" class="loading hidden">
+
+    🌍 Ölkələr yüklənir...
+
+    <br><br>
+
+    <small>Bir neçə saniyə gözlə</small>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- OYUN -->
+<!-- ========================= -->
+
+<div id="gameScreen" class="hidden">
+
+
+    <div class="info">
+
+        <div class="info-box">
+
+            ⏱️ Vaxt:
+            <span id="time">00:00</span>
+
+        </div>
+
+
+        <div class="info-box game-only">
+
+            ❤️ Can:
+            <span id="lives">3</span>
+
+        </div>
+
+
+        <div class="info-box game-only">
+
+            🏆 Xal:
+            <span id="score">0</span>
+
+        </div>
+
+
+        <div class="info-box game-only">
+
+            🔥 Seriya:
+            <span id="streak">0</span>
+
+        </div>
+
+
+        <div class="info-box">
+
+            🌍
+            <span id="progress">0 / 193</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="page-info">
+
+        Səhifə
+        <span id="pageNumber">1</span>
+        /
+        <span id="totalPages">10</span>
+
+    </div>
+
+
+    <div id="message" class="message">
+
+        Ölkə adını uyğun bayrağın üstünə sürüşdür 👇
+
+    </div>
+
+
+    <div id="flags" class="game-grid"></div>
+
+
+    <h2 style="text-align:center; margin-top:30px;">
+        Ölkə adları
+    </h2>
+
+
+    <div id="countries" class="country-list"></div>
+
+
+    <div id="countryInfo"></div>
+
+
+    <div class="navigation">
+
+        <button
+            id="prevButton"
+            class="nav-button"
+            onclick="previousPage()">
+
+            ← Əvvəlki
+
+        </button>
+
+
+        <button
+            id="nextButton"
+            class="nav-button"
+            onclick="nextPage()">
+
+            Növbəti →
+
+        </button>
+
+    </div>
+
+
+    <button class="home-button" onclick="goHome()">
+
+        🏠 Əsas menyu
+
+    </button>
+
+
+</div>
+
+
+<!-- ========================= -->
+<!-- NƏTİCƏ -->
+<!-- ========================= -->
+
+<div id="resultScreen" class="hidden">
+
+    <div class="result-box">
+
+        <h2>🏆 OYUN BİTDİ!</h2>
+
+        <p id="resultText"></p>
+
+        <button
+            class="restart-button"
+            onclick="startGame()">
+
+            🔄 Yenidən oyna
+
+        </button>
+
+
+        <button
+            class="restart-button"
+            onclick="goHome()">
+
+            🏠 Əsas menyu
+
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- ========================= -->
+<!-- DAHA ÇOX ÖYRƏN MODALI -->
+<!-- ========================= -->
+
+<div id="modal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   193 BMT ÜZVÜ
+========================================= */
+
+const UN_COUNTRIES = [
+
+["AF","Əfqanıstan"],
+["AL","Albaniya"],
+["DZ","Əlcəzair"],
+["AD","Andorra"],
+["AO","Anqola"],
+["AG","Antiqua və Barbuda"],
+["AR","Argentina"],
+["AM","Ermənistan"],
+["AU","Avstraliya"],
+["AT","Avstriya"],
+["AZ","Azərbaycan"],
+
+["BS","Baham adaları"],
+["BH","Bəhreyn"],
+["BD","Banqladeş"],
+["BB","Barbados"],
+["BY","Belarus"],
+["BE","Belçika"],
+["BZ","Beliz"],
+["BJ","Benin"],
+["BT","Butan"],
+["BO","Boliviya"],
+["BA","Bosniya və Herseqovina"],
+["BW","Botsvana"],
+["BR","Braziliya"],
+["BN","Bruney"],
+["BG","Bolqarıstan"],
+["BF","Burkina-Faso"],
+["BI","Burundi"],
+
+["CV","Kabo-Verde"],
+["KH","Kamboca"],
+["CM","Kamerun"],
+["CA","Kanada"],
+["CF","Mərkəzi Afrika Respublikası"],
+["TD","Çad"],
+["CL","Çili"],
+["CN","Çin"],
+["CO","Kolumbiya"],
+["KM","Komor adaları"],
+["CG","Konqo Respublikası"],
+["CR","Kosta-Rika"],
+["CI","Kot-d'İvuar"],
+["HR","Xorvatiya"],
+["CU","Kuba"],
+["CY","Kipr"],
+["CZ","Çexiya"],
+
+["KP","Şimali Koreya"],
+["CD","Konqo Demokratik Respublikası"],
+["DK","Danimarka"],
+["DJ","Cibuti"],
+["DM","Dominika"],
+["DO","Dominikan Respublikası"],
+
+["EC","Ekvador"],
+["EG","Misir"],
+["SV","Salvador"],
+["GQ","Ekvatorial Qvineya"],
+["ER","Eritreya"],
+["EE","Estoniya"],
+["SZ","Esvatini"],
+["ET","Efiopiya"],
+
+["FJ","Fici"],
+["FI","Finlandiya"],
+["FR","Fransa"],
+
+["GA","Qabon"],
+["GM","Qambiya"],
+["GE","Gürcüstan"],
+["DE","Almaniya"],
+["GH","Qana"],
+["GR","Yunanıstan"],
+["GD","Qrenada"],
+["GT","Qvatemala"],
+["GN","Qvineya"],
+["GW","Qvineya-Bisau"],
+["GY","Qayana"],
+
+["HT","Haiti"],
+["HN","Honduras"],
+["HU","Macarıstan"],
+
+["IS","İslandiya"],
+["IN","Hindistan"],
+["ID","İndoneziya"],
+["IR","İran"],
+["IQ","İraq"],
+["IE","İrlandiya"],
+["IL","İsrail"],
+["IT","İtaliya"],
+
+["JM","Yamayka"],
+["JP","Yaponiya"],
+["JO","İordaniya"],
+
+["KZ","Qazaxıstan"],
+["KE","Keniya"],
+["KI","Kiribati"],
+["KW","Küveyt"],
+["KG","Qırğızıstan"],
+
+["LA","Laos"],
+["LV","Latviya"],
+["LB","Livan"],
+["LS","Lesoto"],
+["LR","Liberiya"],
+["LY","Liviya"],
+["LI","Lixtenşteyn"],
+["LT","Litva"],
+["LU","Lüksemburq"],
+
+["MG","Madaqaskar"],
+["MW","Malavi"],
+["MY","Malayziya"],
+["MV","Maldiv"],
+["ML","Mali"],
+["MT","Malta"],
+["MH","Marşall adaları"],
+["MR","Mavritaniya"],
+["MU","Mavriki"],
+["MX","Meksika"],
+["FM","Mikroneziya Federativ Ştatları"],
+["MC","Monako"],
+["MN","Monqolustan"],
+["ME","Monteneqro"],
+["MA","Mərakeş"],
+["MZ","Mozambik"],
+["MM","Myanma"],
+
+["NA","Namibiya"],
+["NR","Nauru"],
+["NP","Nepal"],
+["NL","Niderland"],
+["NZ","Yeni Zelandiya"],
+["NI","Nikaraqua"],
+["NE","Niger"],
+["NG","Nigeriya"],
+["MK","Şimali Makedoniya"],
+["NO","Norveç"],
+
+["OM","Oman"],
+
+["PK","Pakistan"],
+["PW","Palau"],
+["PA","Panama"],
+["PG","Papua-Yeni Qvineya"],
+["PY","Paraqvay"],
+["PE","Peru"],
+["PH","Filippin"],
+["PL","Polşa"],
+["PT","Portuqaliya"],
+
+["QA","Qətər"],
+
+["KR","Cənubi Koreya"],
+["MD","Moldova"],
+["RO","Rumıniya"],
+["RU","Rusiya"],
+["RW","Ruanda"],
+
+["KN","Sent-Kits və Nevis"],
+["LC","Sent-Lusiya"],
+["VC","Sent-Vinsent və Qrenadinlər"],
+["WS","Samoa"],
+["SM","San-Marino"],
+["ST","San-Tome və Prinsipi"],
+["SA","Səudiyyə Ərəbistanı"],
+["SN","Seneqal"],
+["RS","Serbiya"],
+["SC","Seyşel adaları"],
+["SL","Syerra-Leone"],
+["SG","Sinqapur"],
+["SK","Slovakiya"],
+["SI","Sloveniya"],
+["SB","Solomon adaları"],
+["SO","Somali"],
+["ZA","Cənubi Afrika"],
+["SS","Cənubi Sudan"],
+["ES","İspaniya"],
+["LK","Şri-Lanka"],
+["SD","Sudan"],
+["SR","Surinam"],
+["SE","İsveç"],
+["CH","İsveçrə"],
+["SY","Suriya"],
+
+["TJ","Tacikistan"],
+["TZ","Tanzaniya"],
+["TH","Tailand"],
+["TL","Şərqi Timor"],
+["TG","Toqo"],
+["TO","Tonqa"],
+["TT","Trinidad və Tobaqo"],
+["TN","Tunis"],
+["TR","Türkiyə"],
+["TM","Türkmənistan"],
+["TV","Tuvalu"],
+
+["UG","Uqanda"],
+["UA","Ukrayna"],
+["AE","Birləşmiş Ərəb Əmirlikləri"],
+["GB","Böyük Britaniya"],
+["US","ABŞ"],
+["UY","Uruqvay"],
+["UZ","Özbəkistan"],
+
+["VU","Vanuatu"],
+["VE","Venesuela"],
+["VN","Vyetnam"],
+
+["YE","Yəmən"],
+
+["ZM","Zambiya"],
+["ZW","Zimbabve"]
+
+];
+
+
+/* =========================================
+   DƏYİŞƏNLƏR
+========================================= */
+
+let countries = [];
+
+let currentPage = 0;
+
+let mode = "";
+
+let selectedCountry = null;
+
+let lives = 3;
+
+let score = 0;
+
+let streak = 0;
+
+let matched = 0;
+
+let seconds = 0;
+
+let timer = null;
+
+let gameFinished = false;
+
+let currentCountryForInfo = null;
+
+
+/* =========================================
+   ELEMENTLƏR
+========================================= */
+
+const menu = document.getElementById("menu");
+
+const loading = document.getElementById("loading");
+
+const gameScreen = document.getElementById("gameScreen");
+
+const resultScreen = document.getElementById("resultScreen");
+
+const flagsContainer = document.getElementById("flags");
+
+const countriesContainer = document.getElementById("countries");
+
+const message = document.getElementById("message");
+
+const countryInfo = document.getElementById("countryInfo");
+
+const modal = document.getElementById("modal");
+
+const modalContent = document.getElementById("modalContent");
+
+
+/* =========================================
+   MƏLUMATLARI YÜKLƏ
+========================================= */
+
+async function loadCountries() {
+
+    loading.classList.remove("hidden");
+
+    menu.classList.add("hidden");
+
+    try {
+
+        const response = await fetch(
+            "https://countries.dev/countries?fields=name,alpha2Code,capital,population,region,subregion,currencies,languages,flag,area"
+        );
+
+        const allData = await response.json();
+
+
+        countries = UN_COUNTRIES.map(function(item) {
+
+            const code = item[0];
+
+            const azName = item[1];
+
+            const data = allData.find(function(c) {
+
+                return c.alpha2Code === code;
+
+            });
+
+
+            if (!data) {
+
+                return null;
+
+            }
+
+
+            return {
+
+                code: code,
+
+                azName: azName,
+
+                apiName: data.name,
+
+                capital: data.capital || "Məlumat yoxdur",
+
+                population: data.population || 0,
+
+                region: data.region || "Məlumat yoxdur",
+
+                subregion: data.subregion || "Məlumat yoxdur",
+
+                currencies: data.currencies || [],
+
+                languages: data.languages || [],
+
+                flag: data.flag || "",
+
+                area: data.area || 0
+
+            };
+
+        }).filter(Boolean);
+
+
+        /* Qarışıq sıra */
+
+        shuffle(countries);
+
+
+        loading.classList.add("hidden");
+
+        gameScreen.classList.remove("hidden");
+
+        currentPage = 0;
+
+        renderPage();
+
+    }
+
+    catch(error) {
+
+        loading.innerHTML = `
+
+            ❌ Ölkə məlumatlarını yükləmək mümkün olmadı.
+
+            <br><br>
+
+            İnternet bağlantısını yoxla və səhifəni yenilə.
+
+            <br><br>
+
+            <button class="restart-button" onclick="location.reload()">
+
+                🔄 Yenidən yoxla
+
+            </button>
+
+        `;
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   QARIŞDIR
+========================================= */
+
+function shuffle(array) {
+
+    for (let i = array.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]];
+
+    }
+
+}
+
+
+/* =========================================
+   ÖYRƏNMƏ REJİMİ
+========================================= */
+
+function startLearning() {
+
+    mode = "learning";
+
+    resetGame();
+
+    loadCountries();
+
+}
+
+
+/* =========================================
+   OYUN REJİMİ
+========================================= */
+
+function startGame() {
+
+    mode = "game";
+
+    resetGame();
+
+    loadCountries();
+
+}
+
+
+/* =========================================
+   SIFIRLA
+========================================= */
+
+function resetGame() {
+
+    if (timer) {
+
+        clearInterval(timer);
+
+    }
+
+    lives = 3;
+
+    score = 0;
+
+    streak = 0;
+
+    matched = 0;
+
+    seconds = 0;
+
+    gameFinished = false;
+
+    selectedCountry = null;
+
+    currentCountryForInfo = null;
+
+    document.getElementById("time").innerText = "00:00";
+
+    document.getElementById("lives").innerText = "3";
+
+    document.getElementById("score").innerText = "0";
+
+    document.getElementById("streak").innerText = "0";
+
+}
+
+
+/* =========================================
+   SƏHİFƏ GÖSTƏR
+========================================= */
+
+function renderPage() {
+
+    flagsContainer.innerHTML = "";
+
+    countriesContainer.innerHTML = "";
+
+    countryInfo.innerHTML = "";
+
+    message.innerText =
+        "Ölkə adını uyğun bayrağın üstünə sürüşdür 👇";
+
+
+    const start = currentPage * 20;
+
+    const pageCountries =
+        countries.slice(start, start + 20);
+
+
+    document.getElementById("pageNumber").innerText =
+        currentPage + 1;
+
+
+    document.getElementById("totalPages").innerText =
+        Math.ceil(countries.length / 20);
+
+
+    document.getElementById("progress").innerText =
+        matched + " / " + countries.length;
+
+
+    pageCountries.forEach(function(country) {
+
+        createFlag(country);
+
+    });
+
+
+    /* ÖLKƏ ADLARINI DA QARIŞDIR */
+
+    const shuffledNames = [...pageCountries];
+
+    shuffle(shuffledNames);
+
+
+    shuffledNames.forEach(function(country) {
+
+        createCountryName(country);
+
+    });
+
+
+    document.getElementById("prevButton").disabled =
+        currentPage === 0;
+
+
+    document.getElementById("nextButton").disabled =
+        currentPage >= Math.ceil(countries.length / 20) - 1;
+
+
+    if (!timer) {
+
+        startTimer();
+
+    }
+
+}
+
+
+/* =========================================
+   BAYRAQ YARAT
+========================================= */
+
+function createFlag(country) {
+
+    const div = document.createElement("div");
+
+    div.className = "flag-card";
+
+    div.dataset.code = country.code;
+
+
+    const img = document.createElement("img");
+
+    img.src =
+        "https://flagcdn.com/w320/" +
+        country.code.toLowerCase() +
+        ".png";
+
+    img.alt = country.azName;
+
+
+    div.appendChild(img);
+
+
+    div.addEventListener("dragover", function(event) {
+
+        event.preventDefault();
+
+    });
+
+
+    div.addEventListener("drop", function(event) {
+
+        event.preventDefault();
+
+        handleDrop(div, country);
+
+    });
+
+
+    flagsContainer.appendChild(div);
+
+}
+
+
+/* =========================================
+   ÖLKƏ ADI YARAT
+========================================= */
+
+function createCountryName(country) {
+
+    const div = document.createElement("div");
+
+    div.className = "country";
+
+    div.innerText = country.azName;
+
+    div.draggable = true;
+
+    div.dataset.code = country.code;
+
+
+    div.addEventListener("dragstart", function(event) {
+
+        selectedCountry = country;
+
+        event.dataTransfer.setData(
+            "text/plain",
+            country.code
+        );
+
+    });
+
+
+    countriesContainer.appendChild(div);
+
+}
+
+
+/* =========================================
+   DROP
+========================================= */
+
+function handleDrop(flagElement, country) {
+
+    if (gameFinished) {
+
+        return;
+
+    }
+
+
+    const code =
+        eventDataCode(event);
+
+
+    if (!selectedCountry) {
+
+        return;
+
+    }
+
+
+    /* DÜZGÜN */
+
+    if (selectedCountry.code === country.code) {
+
+        flagElement.classList.remove("wrong");
+
+        flagElement.classList.add("correct");
+
+
+        showCountryInfo(country);
+
+
+        /* ÖYRƏNMƏ REJİMİ */
+
+        if (mode === "learning") {
+
+            message.innerText =
+                "✅ Düzdür! İndi bu ölkə haqqında öyrən!";
+
+        }
+
+
+        /* OYUN REJİMİ */
+
+        else {
+
+            score += 10;
+
+            streak += 1;
+
+
+            if (streak >= 3) {
+
+                score += 5;
+
+            }
+
+
+            document.getElementById("score").innerText =
+                score;
+
+            document.getElementById("streak").innerText =
+                streak;
+
+
+            message.innerText =
+                "✅ Düzdür! 🔥 Seriyan davam etdir!";
+
+        }
+
+
+        matched++;
+
+
+        document.getElementById("progress").innerText =
+            matched + " / " + countries.length;
+
+
+        /* ÖLKƏ ADINI İSTİFADƏ OLUNMUŞ ET */
+
+        document.querySelectorAll(".country")
+        .forEach(function(item) {
+
+            if (item.dataset.code === country.code) {
+
+                item.classList.add("used");
+
+                item.draggable = false;
+
+            }
+
+        });
+
+
+        /* SONUNCU ÖLKƏ? */
+
+        if (matched >= countries.length) {
+
+            finishGame();
+
+        }
+
+    }
+
+
+    /* SƏHV */
+
+    else {
+
+        flagElement.classList.remove("wrong");
+
+        void flagElement.offsetWidth;
+
+        flagElement.classList.add("wrong");
+
+
+        if (mode === "learning") {
+
+            message.innerText =
+                "❌ Səhvdir. Yenidən cəhd et.";
+
+        }
+
+
+        else {
+
+            lives--;
+
+            streak = 0;
+
+
+            document.getElementById("lives").innerText =
+                lives;
+
+            document.getElementById("streak").innerText =
+                streak;
+
+
+            message.innerText =
+                "❌ Səhvdir! Bir can getdi.";
+
+
+            if (lives <= 0) {
+
+                finishGame();
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   EVENT-DAN KOD
+========================================= */
+
+function eventDataCode(event) {
+
+    return event &&
+           event.dataTransfer ?
+           event.dataTransfer.getData("text/plain") :
+           "";
+
+}
+
+
+/* =========================================
+   ÖLKƏ MƏLUMATI
+========================================= */
+
+function showCountryInfo(country) {
+
+    currentCountryForInfo = country;
+
+
+    let currency = "Məlumat yoxdur";
+
+    if (
+        country.currencies &&
+        country.currencies.length > 0
+    ) {
+
+        currency =
+            country.currencies
+            .map(c => c.name + " (" + c.code + ")")
+            .join(", ");
+
+    }
+
+
+    let languages = "Məlumat yoxdur";
+
+    if (
+        country.languages &&
+        country.languages.length > 0
+    ) {
+
+        languages =
+            country.languages
+            .map(l => l.name)
+            .join(", ");
+
+    }
+
+
+    const population =
+        country.population ?
+        country.population.toLocaleString("en-US") :
+        "Məlumat yoxdur";
+
+
+    const area =
+        country.area ?
+        country.area.toLocaleString("en-US") +
+        " km²" :
+        "Məlumat yoxdur";
+
+
+    countryInfo.innerHTML = `
+
+        <div class="country-info">
+
+            <img
+                src="https://flagcdn.com/w320/${country.code.toLowerCase()}.png"
+            >
+
+            <h2>🌍 ${country.azName}</h2>
+
+
+            <div class="country-details">
+
+                <div class="detail">
+
+                    🏛️ <b>Paytaxt:</b><br>
+
+                    ${country.capital}
+
+                </div>
+
+
+                <div class="detail">
+
+                    👥 <b>Əhali:</b><br>
+
+                    ${population}
+
+                </div>
+
+
+                <div class="detail">
+
+                    🌎 <b>Qitə:</b><br>
+
+                    ${country.region}
+
+                </div>
+
+
+                <div class="detail">
+
+                    📍 <b>Subregion:</b><br>
+
+                    ${country.subregion}
+
+                </div>
+
+
+                <div class="detail">
+
+                    💰 <b>Valyuta:</b><br>
+
+                    ${currency}
+
+                </div>
+
+
+                <div class="detail">
+
+                    🗣️ <b>Dillər:</b><br>
+
+                    ${languages}
+
+                </div>
+
+
+                <div class="detail">
+
+                    📐 <b>Ərazi:</b><br>
+
+                    ${area}
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="learn-button"
+                onclick="openMoreInfo()">
+
+                📖 Daha çox öyrən
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   DAHA ÇOX ÖYRƏN
+========================================= */
+
+function openMoreInfo() {
+
+    const country = currentCountryForInfo;
+
+    if (!country) return;
+
+
+    let currency = "Məlumat yoxdur";
+
+    if (country.currencies.length) {
+
+        currency =
+            country.currencies
+            .map(c =>
+                c.name +
+                " (" +
+                c.code +
+                (c.symbol ? " " + c.symbol : "") +
+                ")"
+            )
+            .join(", ");
+
+    }
+
+
+    let languages = "Məlumat yoxdur";
+
+    if (country.languages.length) {
+
+        languages =
+            country.languages
+            .map(l => l.name)
+            .join(", ");
+
+    }
+
+
+    modalContent.innerHTML = `
+
+        <h2>🌍 ${country.azName}</h2>
+
+        <div style="text-align:center;">
+
+            <img
+                src="https://flagcdn.com/w320/${country.code.toLowerCase()}.png"
+                style="width:180px;"
+            >
+
+        </div>
+
+
+        <div class="fact">
+
+            🏛️ <b>Paytaxt:</b>
+
+            ${country.capital}
+
+        </div>
+
+
+        <div class="fact">
+
+            👥 <b>Əhali:</b>
+
+            ${country.population.toLocaleString("en-US")}
+
+        </div>
+
+
+        <div class="fact">
+
+            🌎 <b>Qitə:</b>
+
+            ${country.region}
+
+        </div>
+
+
+        <div class="fact">
+
+            📍 <b>Subregion:</b>
+
+            ${country.subregion}
+
+        </div>
+
+
+        <div class="fact">
+
+            💰 <b>Valyuta:</b>
+
+            ${currency}
+
+        </div>
+
+
+        <div class="fact">
+
+            🗣️ <b>Dillər:</b>
+
+            ${languages}
+
+        </div>
+
+
+        <div class="fact">
+
+            📐 <b>Ərazi:</b>
+
+            ${country.area.toLocaleString("en-US")} km²
+
+        </div>
+
+
+        <div class="fact">
+
+            🏳️ <b>Ölkə kodu:</b>
+
+            ${country.code}
+
+        </div>
+
+
+        <p style="margin-top:20px; text-align:center;">
+
+            💡 Bu məlumatlar ölkə məlumat bazasından
+            avtomatik alınır.
+
+        </p>
+
+    `;
+
+
+    modal.classList.remove("hidden");
+
+}
+
+
+/* =========================================
+   MODAL BAĞLA
+========================================= */
+
+function closeModal() {
+
+    modal.classList.add("hidden");
+
+}
+
+
+/* =========================================
+   VAxT SAYĞACI
+========================================= */
+
+function startTimer() {
+
+    timer = setInterval(function() {
+
+        if (gameFinished) {
+
+            clearInterval(timer);
+
+            return;
+
+        }
+
+
+        seconds++;
+
+
+        const minutes =
+            Math.floor(seconds / 60);
+
+        const secs =
+            seconds % 60;
+
+
+        document.getElementById("time").innerText =
+
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(secs).padStart(2, "0");
+
+
+    }, 1000);
+
+}
+
+
+/* =========================================
+   NÖVBƏTİ SƏHİFƏ
+========================================= */
+
+function nextPage() {
+
+    const totalPages =
+        Math.ceil(countries.length / 20);
+
+
+    if (currentPage < totalPages - 1) {
+
+        currentPage++;
+
+        renderPage();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   ƏVVƏLKİ SƏHİFƏ
+========================================= */
+
+function previousPage() {
+
+    if (currentPage > 0) {
+
+        currentPage--;
+
+        renderPage();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   OYUNU BİTİR
+========================================= */
+
+function finishGame() {
+
+    gameFinished = true;
+
+
+    if (timer) {
+
+        clearInterval(timer);
+
+    }
+
+
+    if (mode === "learning") {
+
+        resultScreen.classList.remove("hidden");
+
+        gameScreen.classList.add("hidden");
+
+
+        document.getElementById("resultText").innerHTML =
+
+            "🎓 Əla iş!<br><br>" +
+
+            "🌍 Bütün " +
+            countries.length +
+            " ölkəni tamamladın!<br><br>" +
+
+            "⏱️ Vaxt: " +
+            document.getElementById("time").innerText;
+
+    }
+
+
+    else {
+
+        resultScreen.classList.remove("hidden");
+
+        gameScreen.classList.add("hidden");
+
+
+        document.getElementById("resultText").innerHTML =
+
+            "🏆 Xal: " + score +
+
+            "<br><br>" +
+
+            "🔥 Ən son seriya: " + streak +
+
+            "<br><br>" +
+
+            "🌍 Tapılan ölkə: " +
+            matched +
+            " / " +
+            countries.length +
+
+            "<br><br>" +
+
+            "⏱️ Vaxt: " +
+            document.getElementById("time").innerText;
+
+    }
+
+}
+
+
+/* =========================================
+   ƏSAS MENYU
+========================================= */
+
+function goHome() {
+
+    if (timer) {
+
+        clearInterval(timer);
+
+    }
+
+
+    timer = null;
+
+    gameFinished = true;
+
+
+    gameScreen.classList.add("hidden");
+
+    resultScreen.classList.add("hidden");
+
+    loading.classList.add("hidden");
+
+    menu.classList.remove("hidden");
+
+}
+
+
+/* =========================================
+   MODAL ÇIXANDA ESC
+========================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        closeModal();
+
+    }
+
+});
+
+
+</script>
+
+</body>
+
+</html>
